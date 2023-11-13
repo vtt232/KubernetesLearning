@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rest-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rest-backend
+  template:
+    metadata:
+      labels:
+        app: rest-backend
+    spec:
+      containers:
+        - name: rest-backend
+          image: thinh23/rest:first
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: /api/access/status
+              port: 8080
+            initialDelaySeconds: 60
+            periodSeconds: 60
+          livenessProbe:
+            httpGet:
+              path: /api/access/status
+              port: 8080
+            initialDelaySeconds: 120
+            periodSeconds: 120
+
+

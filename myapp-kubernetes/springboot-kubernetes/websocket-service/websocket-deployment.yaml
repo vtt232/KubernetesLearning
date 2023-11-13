@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: websocket-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: websocket-backend
+  template:
+    metadata:
+      labels:
+        app: websocket-backend
+    spec:
+      containers:
+        - name: websocket-backend
+          image: thinh23/websocket:first
+          ports:
+            - containerPort: 8080
+
+

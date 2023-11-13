@@ -1,12 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: spring-boot-service
-  namespace: myapp
+  name: rest-service
 spec:
   selector:
-    app: spring-boot-backend
+    app: rest-backend
   ports:
     - protocol: TCP
       port: 8080
-  type: LoadBalancer
+  type: NodePort

@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: mysql-statefulset
-  namespace: myapp
 spec:
   serviceName: mysqldb
   replicas: 1
@@ -11,7 +10,6 @@ spec:
       app: mysql
   template:
     metadata:
-      namespace: myapp
       labels:
         app: mysql
     spec:
@@ -22,10 +20,17 @@ spec:
             - name: MYSQL_ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: mysql-pass
+                  name: mysql-root-password-yes
                   key: MYSQL_ROOT_PASSWORD
           ports:
             - containerPort: 3306
+          readinessProbe:
+            exec:
+              command:
+                - "mysqladmin"
+                - "ping"
+            initialDelaySeconds: 300
+            periodSeconds: 60
           volumeMounts:
             - name: init-scripts
               mountPath: /docker-entrypoint-initdb.d

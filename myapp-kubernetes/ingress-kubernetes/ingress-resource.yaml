@@ -1,11 +1,11 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  namespace: ingress-nginx
-  name: myapp
+  name: ingress-nginx
 spec:
+  ingressClassName: nginx
   rules:
-    - host: myapp.example.com
+    - host: localhost
       http:
         paths:
           - path: /
@@ -15,7 +15,21 @@ spec:
                 name: react-service
                 port:
                   number: 3000
-          - path: /api
+          - path: /api/
+            pathType: Prefix
+            backend:
+              service:
+                name: spring-boot-service
+                port:
+                  number: 8080
+          - path: /oauth2/
+            pathType: Prefix
+            backend:
+              service:
+                name: spring-boot-service
+                port:
+                  number: 8080
+          - path: /login/oauth2/
             pathType: Prefix
             backend:
               service:

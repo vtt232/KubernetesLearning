@@ -1,7 +1,6 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  namespace: myapp
   name: react-frontend
 spec:
   replicas: 1
@@ -16,6 +15,6 @@ spec:
     spec:
       containers:
         - name: react-frontend
-          image: thinh23/react-frontend:kube
+          image: thinh23/react-frontend:lo
           ports:
             - containerPort: 3000
